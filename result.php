@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Desafio Instrutura de dados</title>
+	<meta charset="utf-8">
 	<style type="text/css">
 		.yellow{
 			background-color: yellow;
@@ -29,6 +30,9 @@
 			border: 1px solid black;
 			cursor: pointer;
 		}
+		.border-error{
+			border: 1px solid black;
+		}
 	</style>
 </head>
 <body>
@@ -38,15 +42,23 @@
 	<?php print_r($_POST); ?>
 	</pre>
 	
-	<!-- <div class="challenge">
-		
+	<div class="challenge">
+		<?php
+			foreach ($_POST['challengeSequence'] as $key => $challenge){
+				echo "<div class=\"{$challenge}\">".$key+1."</div>";
+			}
+		?>
 	</div>
 	<div class="answers">
-		<div class="yellow"></div>
-		<div class="blue"></div>
-		<div class="red"></div>
-		<div class="green"></div>
-	</div> -->
+		<?php
+			foreach ($_POST['answers'] as $key => $answer){
+				if($answer == $_POST['challengeSequence'][$key])
+					echo "<div class=\"{$answer}\">".$key+1."</div>";
+				else
+					echo "<div class=\"{$answer} border-error\">".$key+1."</div>";
+			}
+		?>
+	</div>
 
 	
 </body>

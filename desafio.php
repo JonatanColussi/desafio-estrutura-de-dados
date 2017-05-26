@@ -29,9 +29,10 @@
 			border: 1px solid black;
 			cursor: pointer;
 		}
-		/*.challenge > div{
-			display: none;
-		}*/
+		.disabled{
+			opacity: 0.5;
+			cursor: no-drop;
+		}
 	</style>
 </head>
 <body>
@@ -55,71 +56,57 @@
 
 	jQuery(document).ready(function($){
 		randomColor();
-		// $(function(){
-		// 	var cores = ['skyblue','blue', 'black', 'green','yellow','green'];
-		// 	var tamanhoArray = cores.length;
-		// 	var contador = 0;
-		// 	setInterval(function(){
-		// 		$("body").css("background-color",cores[contador]);
-		// 		alert("A cor visualizada agora é: "+cores[contador]);
-		// 		contador++;
-		// 		if(contador>tamanhoArray){
-		// 		contador = 0;
-		// 	}
-		// 	},2000);
-		// 	 // VAI CHAMAR A FUNÇÃO DE 2 EM 2 SEGUNDOS !
-		// });
 	});
 
 	function randomColor(){
 		random = Math.floor((Math.random() * challenge.length) + 1);
 
+		answers = [];
 		challengeSequence.push(challenge[random-1]);
 		index = 0;
+		var offset = 0;
+		
 
-		while(index < challengeSequence.length){
-			setTimeout(function(){
-				if(index < challengeSequence.length){
-					$(".challenge").html('<div class="'+challengeSequence[index]+'">');
-					index++;
-				}else{
-					// alert('acabou');
-				}
-			}, 2000);
+		$(".answers").addClass('disabled');
+
+		for(var i = 0; i < challengeSequence.length; i++){
+			(function(index){
+				setTimeout(function(){
+			       	$(".challenge").fadeOut();
+			       	$(".challenge").html('<div class='+challengeSequence[index]+'>');
+			       	$(".challenge").fadeIn();
+		       }, 1000 + offset);
+		   	})(i);
+		   	offset += 1000;
 		}
-		
 
-		
-		// for(var i = 0; i < challengeSequence.length; i++){
-		// 	var hide = i-1;
-		// 	if()
-	 //       	$(".challenge > div[data-index="+hide+"]").fadeOut(2000);
-		// 	(function(index){
-		// 		setTimeout(function(){
-		// 	       	$(".challenge > div[data-index="+index+"]").css('display', 'inline-block');
-		//        }, 2000);
-		//    	})(i);
-		// }
+		var timeout = 1000*challengeSequence.length;
+
+		setTimeout(function(){
+			$(".answers").removeClass('disabled');
+		}, timeout);
 
 	}
 
-	function changeColor(color){}
-
 	$(".answers > div").on('click', function(){
-		var selected = $(this).attr('class');
+		if(!$(this).parent().hasClass('disabled')){
+			var selected = $(this).attr('class');
 
+			answers.push(selected);
 
-		answers.push(selected);
-		
-		if(selected != challengeSequence[challengeSequence.length-1]){
-			$(".answers").after('<form action="result.php" method="post"></form>');
-			for(var i = 0; i < challengeSequence.length; i++){
-				$("form").append('<input type="hidden" name="challengeSequence[]" value="'+challengeSequence[i]+'">');
-				$("form").append('<input type="hidden" name="answers[]" value="'+answers[i]+'">');
+			
+			if(answers[answers.length-1] != challengeSequence[answers.length-1]){
+				$(".answers").after('<form action="result.php" method="post"></form>');
+				for(var i = 0; i < challengeSequence.length; i++){
+					$("form").append('<input type="hidden" name="challengeSequence[]" value="'+challengeSequence[i]+'">');
+					if(answers[i] != undefined)
+						$("form").append('<input type="hidden" name="answers[]" value="'+answers[i]+'">');
+				}
+				$("form").submit();
 			}
-			$("form").submit();
-		}else{
-			randomColor();
+
+			if(answers.length == challengeSequence.length)
+				randomColor();
 		}
 	});
 
