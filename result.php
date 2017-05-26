@@ -37,15 +37,10 @@
 </head>
 <body>
 	<h1>VocÊ perdeu :(</h1>
-	<pre>
-		
-	<?php print_r($_POST); ?>
-	</pre>
-	
 	<div class="challenge">
 		<?php
 			foreach ($_POST['challengeSequence'] as $key => $challenge){
-				echo "<div class=\"{$challenge}\">".$key+1."</div>";
+				echo "<div class=\"{$challenge}\">{$key}</div>";
 			}
 		?>
 	</div>
@@ -53,9 +48,9 @@
 		<?php
 			foreach ($_POST['answers'] as $key => $answer){
 				if($answer == $_POST['challengeSequence'][$key])
-					echo "<div class=\"{$answer}\">".$key+1."</div>";
+					echo "<div class=\"{$answer}\">{$key}</div>";
 				else
-					echo "<div class=\"{$answer} border-error\">".$key+1."</div>";
+					echo "<div class=\"{$answer} border-error\">{$key}</div>";
 			}
 		?>
 	</div>
