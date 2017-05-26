@@ -1,0 +1,79 @@
+*{
+	margin:  0;
+	padding: 0;
+}
+body{
+	background-color: #ccc;
+}
+.yellow{
+	background-color: yellow;
+}
+.blue{
+	background-color: blue;
+}
+.red{
+	background-color: red;
+}
+.green{
+	background-color: green;
+}
+body > .answers, body > .challenge{
+	width: 100%;
+	text-align: center;
+}
+body > .challenge{
+	margin-top: 150px;
+}
+.status, h4.score{
+	width: 100%;
+	text-align: center;
+	margin: 2em 0;
+	min-height: 1em;
+}
+.answers{
+	bottom: 1em;
+}
+.answers > div, .challenge > div{
+	width: 160px;
+	height: 160px;
+	margin: 0 1em;
+	display: inline-block;
+}
+body > .answers > div:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
+.disabled{
+	opacity: 0.5;
+	cursor: no-drop;
+}
+.modal{
+	z-index: 9999;
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	top: 5%;
+	left: 5%;
+	border: 1px solid red;
+	background-color: #bcbcbc;
+	text-align: center;
+	display: none;
+}
+.modal h3{
+	text-align: left;
+	padding-left: 1em;
+}
+
+.modal > div{
+	display: inline-block;
+}
+.modal > div > div{
+	width: 50px;
+	height: 50px;
+}
+.modal > div > div > span{
+	display: block;
+}
+.modal > .answers > .error{
+	opacity: 0.5;
+}
