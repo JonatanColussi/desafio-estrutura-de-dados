@@ -13,6 +13,7 @@
 		<div class="red"></div>
 		<div class="green"></div>
 	</div>
+	<div class="time"><span>Tempo para resposta <b>9 Segundos</b></span></div>
 	<h4 class="score">0 Pontos</h4>
 
 	<div class="modal">
@@ -24,9 +25,25 @@
 		<div class="answers">
 			<h3>Você marcou:</h3>
 		</div>
+		<br>
+		<br>
+		<div class="ranking">
+			<h3>Ranking:</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Pontuação</th>
+						<th>Nome</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 		<h4 class="score">Você fez 3 Pontos!</h4>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="js/countdown.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 </html>

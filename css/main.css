@@ -24,7 +24,7 @@ body > .answers, body > .challenge{
 body > .challenge{
 	margin-top: 150px;
 }
-.status, h4.score{
+.status, h4.score, .time{
 	width: 100%;
 	text-align: center;
 	margin: 2em 0;
@@ -47,6 +47,17 @@ body > .answers > div:hover{
 	opacity: 0.5;
 	cursor: no-drop;
 }
+.time{
+	position: relative;
+}
+.time:before{
+	position: absolute;
+	background-color: red;
+	width: 20%;
+}
+
+
+/* modal */
 .modal{
 	z-index: 9999;
 	position: absolute;
@@ -76,4 +87,13 @@ body > .answers > div:hover{
 }
 .modal > .answers > .error{
 	opacity: 0.5;
+}
+
+.ranking{
+	display: none;
+}
+
+.ranking table, .ranking table td, .ranking table th{
+	border: 1px solid black;
+	border-collapse: collapse;
 }
