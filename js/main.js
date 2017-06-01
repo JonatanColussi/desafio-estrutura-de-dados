@@ -83,10 +83,8 @@ $("body > .answers > div").on('click', function(){
 			score++;
 			//Informa que ele acertou a sequência
 			$status.text('Parabéns, você acertou a sequência!');
-			//Verifica se a mensagem de pontuação deve ser exibida no singular ou plural
-			var txtScore = (score > 1) ? score+' Pontos' : score+' Ponto';
-			//Informa a pontuação com a mensagem
-			$(".score").text(txtScore);	
+			//Informa a pontuação
+			$(".score").text(scoreDescription(score));	
 			//Aguarda 1 segundo
 			setTimeout(function(){
 				//Gera um novo desafio
@@ -97,6 +95,11 @@ $("body > .answers > div").on('click', function(){
 			countdown.restart();
 		}
 	}
+});
+
+//Função para fechar o jogo
+$(".closeGame").on('click', function(){
+	$("body").html("<h1>Jogo Finalizado ;)</h1><br><h3>Desenvolvido por Jonatan Colussi</h3>");
 });
 
 //Função para finalizar o jogo
@@ -129,35 +132,51 @@ function finishGame(){
 		//Define que o jogo acabou
 		finish = true;
 
+		//Pede ao usuário para incluir seu nome no ranking
 		var name = prompt("Para incluír sua pontuação ao ranking, informe seu nome abaixo:");
+		//Se o nome foi informado, envia o nome do jogador e a pontuação para a funcionalidade responsável por inserir os mesmos na lista
 		if(name != '' && name != null)
 			var data = {
 				name: name,
 				score: score
 			};
-		else
+		else //Se o nome não for informado, envia os dados vazios
 			var data = {};
 
+		//"Chama" um arquivo externo (.php) que vai ler, ordenar e retornar a lista
 		$.ajax({
-			url: 'setRanking.php',
-			type: 'POST',
-			dataType: 'json',
-			data: data,
-			success: function(ranking){
-				viewRanking(ranking);
+			url: 'setRanking.php', //caminho do arquivo
+			type: 'POST', //Método http
+			dataType: 'json', //tipo de retorno
+			data: data, //dados que estou enviando
+			success: function(ranking){ //recebe o ranking em formato json
+				viewRanking(ranking); //chama a função que imprime o ranking na tela
 			},
-			error: function(error){
-				console.log(error);
-				alert('Ocorreu um erro inesperado');
+			error: function(error){ //se ocorreu algum erro na requisição http
+				console.log(error); //exibe o erro no console
+				alert('Ocorreu um erro inesperado'); //informa ao usuário que ocorreu um erro
 			}
 		});
 	}
 }
 
+//Monta a marcação da tabela do ranking
 function viewRanking(ranking){
+	//limpa a tabela
 	$('.ranking tbody').html('');
+	//precorre a lista, imprimindo um a um
 	for(var i = 0; i < ranking.length; i++){
-		$('.ranking tbody').append('<tr><td>'+ranking[i].score+'</td><td>'+ranking[i].name+'</td></tr>');
+		$('.ranking tbody').append('<tr><td>'+(i+1)+'º</td><td>'+scoreDescription(ranking[i].score)+'</td><td>'+ranking[i].name+'</td></tr>');
 	}
+	//exibe a tabela que estava oculta
 	$('.ranking').show();
+}
+
+//Define o plural/singular da pontuação
+function scoreDescription(score){
+	//se a pontuação for 0 ou maior que 1, imprime a mensagem no plural
+	if(score == 0 || score > 1)
+		return score+' Pontos';
+	else //Se a pontuação for 1, imprime a mensagem no singular
+		return score+' Ponto';
 }

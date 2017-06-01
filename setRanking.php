@@ -30,6 +30,11 @@
 			}
 		}
 
+		//Verifica se existem mais de 5 elementos na lista
+		if(count($ranking) > 5)
+			//Se existir, remove o último
+			unset($ranking[count($ranking)-1]);
+
 		//Transforma a lista, agora ordenada em formato json
 		$rankingJson = json_encode($ranking);
 

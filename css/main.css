@@ -71,7 +71,7 @@ body > .answers > div:hover{
 	display: none;
 }
 .modal h3{
-	text-align: left;
+	text-align: center;
 	padding-left: 1em;
 }
 
@@ -88,6 +88,9 @@ body > .answers > div:hover{
 .modal > .answers > .error{
 	opacity: 0.5;
 }
+h4.score{
+	margin-top: 1em;
+}
 
 .ranking{
 	display: none;
@@ -96,4 +99,25 @@ body > .answers > div:hover{
 .ranking table, .ranking table td, .ranking table th{
 	border: 1px solid black;
 	border-collapse: collapse;
+	padding: 5px;
+}
+
+.buttons > button {
+    background-color: transparent;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+.buttons > button > a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.buttons > button:hover {
+    background-color: #000000;
+}
+
+.buttons > button:hover > a {
+    color: #ffffff;
 }
