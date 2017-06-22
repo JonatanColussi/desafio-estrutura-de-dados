@@ -1,10 +1,10 @@
-var challenge = ['yellow', 'blue', 'red', 'green']; //Lista com as possíveis cores do desafio
+var challenge         = ['yellow', 'blue', 'red', 'green']; //Lista com as possíveis cores do desafio
 var challengeSequence = []; //Lista com a sequência de cores gerada pelo sistema
-var answers = []; //lista de respostas do jogador
-var $status = $("body .status"); //Seletor de status
-var score = 0; //Pontuação inicial
-var finish = false; //definição previa de que o programa não deve finalizar
-var countdown = new Countdown(9); //Definimos nosso contador com 9 segundos
+var answers           = []; //lista de respostas do jogador
+var $status           = $("body .status"); //Seletor de status
+var score             = 0; //Pontuação inicial
+var finish            = false; //definição previa de que o programa não deve finalizar
+var countdown         = new Countdown(9); //Definimos nosso contador com 9 segundos
 
 jQuery(document).ready(function($){
 	//Quando carrega a página, geramos uma cor aleatória
@@ -13,6 +13,7 @@ jQuery(document).ready(function($){
 
 //Função para gerar cores aleatórias
 function randomColor(){
+	//Pausa o contador
 	countdown.pause();
 	//Informa ao usuário que o desafio está sendo gerado
 	$status.text('Gerando desafio...');
@@ -65,6 +66,7 @@ function randomColor(){
 
 //Função para quando o usuário clicar em uma resposta
 $("body > .answers > div").on('click', function(){
+	//Pausa o contador
 	countdown.pause();
 	//Verifica se o sistema já acaboou de exibir o desafio e o usuário pode repetir a sequência
 	if(!$(this).parent().hasClass('disabled')){
@@ -75,7 +77,7 @@ $("body > .answers > div").on('click', function(){
 		//Verifica se a cor que o usuário selecionou é diferente da gerada pelo desafio (cor X posição)
 		if(answers[answers.length-1] != challengeSequence[answers.length-1])
 			//Finaliza o jogo
-			finishGame();
+			finishGame('error');
 
 		//verifica se o usuário marcou a mesma quantidade de cores que o desafio, e não errou nenhuma (finish = false)
 		if(answers.length == challengeSequence.length && !finish){
@@ -103,7 +105,7 @@ $(".closeGame").on('click', function(){
 });
 
 //Função para finalizar o jogo
-function finishGame(){
+function finishGame(cause){
 	//Verifica se o jogo já não havia sido finalizado
 	if(!finish){
 		//Percorre as duas listas paralelamente (pelos indíces da lista de desafios)
@@ -122,9 +124,9 @@ function finishGame(){
 		}
 
 		//Informa ao usuário que ele perdeu o jogo
-		$status.text('Oops, você perdeu :(');
+		$status.text((cause == 'time') ? 'Oops, o tempo acabou :(' : 'Oops, você errou a sequência :(');
 		//Verifica se a mensagem de pontuação deve ser exibida no singular ou plural
-		var txtScore = (score > 1) ? score+' Pontos' : score+' Ponto';
+		var txtScore = (score > 1 || score == 0) ? score+' Pontos' : score+' Ponto';
 		//Informa a pontuação com a mensagem
 		$(".score").text(txtScore);	
 		//Mostra a tela de finalização
@@ -165,9 +167,8 @@ function viewRanking(ranking){
 	//limpa a tabela
 	$('.ranking tbody').html('');
 	//precorre a lista, imprimindo um a um
-	for(var i = 0; i < ranking.length; i++){
+	for(var i = 0; i < ranking.length; i++)
 		$('.ranking tbody').append('<tr><td>'+(i+1)+'º</td><td>'+scoreDescription(ranking[i].score)+'</td><td>'+ranking[i].name+'</td></tr>');
-	}
 	//exibe a tabela que estava oculta
 	$('.ranking').show();
 }

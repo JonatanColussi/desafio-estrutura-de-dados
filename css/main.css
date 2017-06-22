@@ -62,7 +62,7 @@ body > .answers > div:hover{
 	z-index: 9999;
 	position: absolute;
 	width: 90%;
-	height: 90%;
+	height: 660px;
 	top: 5%;
 	left: 5%;
 	border: 1px solid red;
